@@ -54,7 +54,8 @@ def randHeader():
 
 def getCurrentTime():  
         # 获取当前时间  
-        return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))  
+        return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))
+    
 def getURL(url, tries_num=5, sleep_time=0, time_out=10,max_retry = 5):  
         ''''' 
            这里重写get函数，主要是为了实现网络中断后自动重连，同时为了兼容各种网站不同的反爬策略及，通过sleep时间和timeout动态调整来测试合适的网络连接参数； 
