@@ -96,7 +96,7 @@ class FundSpiders():
     def __init__(self):
         self.myrss = PyRSS2Gen.RSS2(title = 'Get fund gz from 1234567.com',
                                 link = 'http://my.com',
-                                docs = '',
+                                docs = 'Test',
                                 description = "仅供本人自用测试 _ DouBa",
                                 pubDate = getCurrentTime(),
                                 lastBuildDate = getCurrentTime(),
@@ -129,9 +129,9 @@ class FundSpiders():
         fund_gz_str = fund_gz["gztime"] + " " + fund_code + " 估值：" + fund_gz["gsz"] + " 涨幅：" + fund_gz["gszzl"] + "% ( " + fund_gszzl +" ) " + fund_gz["name"]
         # print (fund_gz_str)
         rss = PyRSS2Gen.RSSItem(
-            title = fund_gz["name"],
+            title = fund_gz_str,
             link = fund_url,
-            description = fund_gz["gztime"] + " " + fund_code + " 估值：" + fund_gz["gsz"] + " 涨幅：" + fund_gz["gszzl"] + "% ( " + fund_gszzl +" ) ",
+            description = fund_gz["gztime"],
             pubDate = getCurrentTime()
             )
         self.myrss.items.append(rss)
