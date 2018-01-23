@@ -1,12 +1,12 @@
 # GetFund
 测试读取基金数据,生成RSS
 
-# 安装 crontab
-# yum install crontabs
+安装 crontab
+yum install crontabs
 
-# 设定服务
-# systemctl enable crond
-# systemctl start crond
+设定服务
+systemctl enable crond
+systemctl start crond
 
 crontab -e配置是针对某个用户的，而编辑/etc/crontab是针对系统的任务 
 
@@ -17,14 +17,14 @@ crontab -l -u jp //列出用户jp的所有调度任务
 删除任务调度工作 
 crontab -r //删除所有任务调度工作 
 
-# Example of job definition:
-# .---------------- minute (0 - 59)
-# |  .------------- hour (0 - 23)
-# |  |  .---------- day of month (1 - 31)
-# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
-# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
-# |  |  |  |  |
-# *  *  *  *  * user-name command to be executed
+ Example of job definition:
+ .---------------- minute (0 - 59)
+ |  .------------- hour (0 - 23)
+ |  |  .---------- day of month (1 - 31)
+ |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+ |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+ |  |  |  |  |
+ *  *  *  *  * user-name command to be executed
 
 星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。 
 逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9” 
