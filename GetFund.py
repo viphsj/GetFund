@@ -110,6 +110,14 @@ class FundSpiders():
     def getCurrentTime(self):  
         # 获取当前时间  
         return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))  
+    
+    def getRfc822Time(self):
+        # 获取 RFC822 日期格式，以便 RSS 使用
+        # Here is an example, a format for dates compatible with that specified in the RFC 2822 Internet email standard. 
+        # from time import gmtime, strftime
+        # strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        # 'Thu, 28 Jun 2001 14:17:15 +0000'
+        return time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())  
   
     def getFundCodesFromCsv(self):  
         # 从csv文件中获取基金代码清单（可从wind或者其他财经网站导出）
