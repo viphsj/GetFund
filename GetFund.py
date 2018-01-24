@@ -5,7 +5,7 @@
 # 基金估值1：https://fundgz.1234567.com.cn/js/160222.js?rt=1516587368315
 # 基金估值2：https://fundmobapi.eastmoney.com/FundMApi/FundValuationDetail.ashx?FCODE=161725&deviceid=Wap&plat=Wap&product=EFund&version=2.0.0&Uid=1996055101399758&_=1516629470384
 # 基金详细信息：http://fund.eastmoney.com/pingzhongdata/160222.js?v=20180122095601
-# 
+# RSS 文件规范校验地址:https://validator.w3.org/feed/check.cgi
 # 代码借鉴了以下文章：http://blog.csdn.net/yuzhucu/article/details/55261024
 #######################################################################################################
 
@@ -58,6 +58,14 @@ def randHeader():
 def getCurrentTime():  
         # 获取当前时间  
         return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))
+
+def getRfc822Time():
+    # 获取 RFC822 日期格式，以便 RSS 使用
+    # Here is an example, a format for dates compatible with that specified in the RFC 2822 Internet email standard.
+    # from time import gmtime, strftime
+    # strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+    # 'Thu, 28 Jun 2001 14:17:15 +0000'
+    return time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
     
 def getURL(url, tries_num=5, sleep_time=0, time_out=10,max_retry = 5,isproxy = 0):  
         ''''' 
@@ -94,30 +102,18 @@ def getURL(url, tries_num=5, sleep_time=0, time_out=10,max_retry = 5,isproxy = 0
 class FundSpiders():  
   
     def __init__(self):
-        self.myrss = PyRSS2Gen.RSS2(title = 'Get fund gz from 1234567.com',
+        self.myrss = PyRSS2Gen.RSS2(title = '测试',
                                 link = 'http://my.com',
-                                docs = 'Test',
+                                docs = 'http://my.com',
                                 description = "仅供本人自用测试 _ DouBa",
-                                pubDate = getCurrentTime(),
-                                lastBuildDate = getCurrentTime(),
+                                pubDate = getRfc822Time(),
+                                lastBuildDate = getRfc822Time(),
                                 items=[]
                                 )
         #xmlpath = r'fund.xml'
         #baseurl = "http://my.com"
         #if os.path.isfile(self.xmlpath):
           #os.remove(self.xmlpath)
-
-    def getCurrentTime(self):  
-        # 获取当前时间  
-        return time.strftime('[%Y-%m-%d %H:%M:%S]', time.localtime(time.time()))  
-    
-    def getRfc822Time(self):
-        # 获取 RFC822 日期格式，以便 RSS 使用
-        # Here is an example, a format for dates compatible with that specified in the RFC 2822 Internet email standard. 
-        # from time import gmtime, strftime
-        # strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        # 'Thu, 28 Jun 2001 14:17:15 +0000'
-        return time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())  
   
     def getFundCodesFromCsv(self):  
         # 从csv文件中获取基金代码清单（可从wind或者其他财经网站导出）
@@ -140,7 +136,7 @@ class FundSpiders():
             title = fund_gz_str,
             link = fund_url,
             description = fund_gz["gztime"],
-            pubDate = getCurrentTime()
+            pubDate = getRfc822Time()
             )
         self.myrss.items.append(rss)
         return fund_gz
