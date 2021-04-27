@@ -16,7 +16,7 @@ if "JD_COOKIE" in os.environ:
     for line in secret.split('&'):
         pt_key = re.findall(r'pt_key=(.*?);', line)[0]
         pt_pin = re.findall(r'pt_pin=(.*?)$', line)[0]
-        if cookieId <= 2:
+        if cookieId <= 1:
             cookieLists.append({"pt_key": pt_key, "pt_pin": pt_pin})
         cookieLists_all.append({"pt_key": pt_key, "pt_pin": pt_pin})
         cookieId += 1
