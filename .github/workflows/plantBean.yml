@@ -1,0 +1,29 @@
+name: 种豆得豆
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 */2 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run App
+      run: |
+        python plantBean.py
+      env: |
+        JD_COOKIE: ${{ secrets.JD_COOKIE }}
+        # TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        # TG_USER_ID: ${{ secrets.TG_USER_ID }}
