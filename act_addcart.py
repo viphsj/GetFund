@@ -112,16 +112,6 @@ for cookies in jdCookie.get_cookies():
         hasFollow = response.json()["data"]["hasFollow"]
         userId = response.json()["data"]["userId"]
         print(f'{addCartActInfo["shopName"]} 开始加购')
-        if needFollow == True and hasFollow == False:
-            data = {
-                'userId': userId,
-                'buyerNick': secretPin,
-                'activityId': addCartActInfo["activityId"],
-                'activityType': str(activityType)
-            }
-            followShop = session.post("https://lzkj-isv.isvjd.com/wxActionCommon/followShop", headers=headers, data=data, params=params)
-            print(f'开始关注店铺 {followShop.text}')
-            time.sleep(random.randint(2, 3))
         if needAddCartSize > 0:
             if needFollow == True and hasFollow == False:
                 data = {
