@@ -25,5 +25,6 @@ jobs:
         python lottery.py
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
+        JD_LOTTERYLIST_URL: ${{ secrets.JD_LOTTERYLIST_URL }}
         # TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
         # TG_USER_ID: ${{ secrets.TG_USER_ID }}
