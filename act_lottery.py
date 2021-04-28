@@ -97,12 +97,13 @@ for cookies in jdCookie.get_cookies():
         if response.json()["result"] == True and response.json()["data"]["canDrawTimes"] > 0:
             for i in range(response.json()["data"]["canDrawTimes"]):
                 response = session.post("https://lzkj-isv.isvjd.com/wxDrawActivity/start", headers=headers, data=data, params=params)
-                if response.json()["result"] != False:
-                    if response.json()["data"]["drawOk"] == True:
-                        errMsg = " 获得 " + response.json()["data"]["name"]
-                    else:
-                        errMsg = " 未中奖！"
-                    print(lotteryActInfo["shopName"], errMsg)
+                pattern = re.compile(r'"drawOk":true,"')
+                giftOk = pattern.search(response.text)
+                if giftOk != None:
+                    errMsg = " 获得 " + response.json()["data"]["name"]
+                else:
+                    errMsg = " 未中奖！"
+                print(lotteryActInfo["shopName"], errMsg, "\n")
                 time.sleep(random.randint(3, 6))
         else:
             print(lotteryActInfo["shopName"], " 无抽奖次数！")
