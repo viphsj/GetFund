@@ -22,10 +22,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run App
       run: |
-        python lottery.py
+        python act_sign.py
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
-        JD_LOTTERYLIST_URL: ${{ secrets.JD_LOTTERYLIST_URL }}
         JD_SIGN_GETTOKEN_URL: ${{ secrets.JD_SIGN_GETTOKEN_URL }}
         JD_SIGN_GETTOKEN_BODY: ${{ secrets.JD_SIGN_GETTOKEN_BODY }}
         JD_SIGN_URL: ${{ secrets.JD_SIGN_URL }}
