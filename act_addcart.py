@@ -131,7 +131,10 @@ for cookies in jdCookie.get_cookies():
                     'activityType': str(activityType)
                 }
                 followShop = session.post("https://lzkj-isv.isvjd.com/wxActionCommon/followShop", headers=headers, data=data, params=params)
-                print(f'开始关注店铺 {followShop.text}')
+                if followShop.json()["result"] == True:
+                    print(f'关注店铺 成功')
+                else:
+                    print(f'关注店铺 失败  {followShop.json()["errorMessage"]}')
                 time.sleep(random.randint(2, 3))
             for cpvosInfo in cpvosList:
                 hasAddCartSize = 0
