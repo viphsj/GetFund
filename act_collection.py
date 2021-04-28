@@ -162,7 +162,7 @@ for cookies in jdCookie.get_cookies():
         elif getPrize.text.find('"result":false,') > -1:
             print(f'错误：{getPrize.json()["errorMessage"]}\n')
         else:
-            print(f'错误：{getPrize.text]}\n')
+            print(f'错误：{getPrize.text}\n')
         time.sleep(random.randint(3, 6))
     print("\n")
     print("##"*30)
