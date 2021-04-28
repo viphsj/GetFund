@@ -136,7 +136,8 @@ for cookies in jdCookie.get_cookies():
             pattern = re.compile(r'(?<="giftName":").+?(?=",")')                
             giftName = pattern.search(response.text)
             if giftName == None:
-                giftName = response.json()["msg"]
-            print(activityInfo["shopName"], " ", giftName.group())
+                print(activityInfo["shopName"], " ", response.json()["msg"])
+            else:
+                print(activityInfo["shopName"], " ", giftName.group())
     print("\n")
     print("##"*30)
