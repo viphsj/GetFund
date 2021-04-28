@@ -1,4 +1,4 @@
-name: 小活动抽奖
+name: 小活动-抽奖
 
 on:
   workflow_dispatch:
@@ -26,5 +26,3 @@ jobs:
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
         JD_LOTTERYLIST_URL: ${{ secrets.JD_LOTTERYLIST_URL }}
-        # TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-        # TG_USER_ID: ${{ secrets.TG_USER_ID }}
