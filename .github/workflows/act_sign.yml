@@ -1,0 +1,31 @@
+name: 小活动-签到
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */4 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run App
+      run: |
+        python lottery.py
+      env:
+        JD_COOKIE: ${{ secrets.JD_COOKIE }}
+        JD_LOTTERYLIST_URL: ${{ secrets.JD_LOTTERYLIST_URL }}
+        JD_SIGN_GETTOKEN_URL: ${{ secrets.JD_SIGN_GETTOKEN_URL }}
+        JD_SIGN_GETTOKEN_BODY: ${{ secrets.JD_SIGN_GETTOKEN_BODY }}
+        JD_SIGN_URL: ${{ secrets.JD_SIGN_URL }}
