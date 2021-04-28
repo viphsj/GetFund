@@ -123,6 +123,16 @@ for cookies in jdCookie.get_cookies():
             print(f'开始关注店铺 {followShop.text}')
             time.sleep(random.randint(2, 3))
         if needAddCartSize > 0:
+            if needFollow == True and hasFollow == False:
+                data = {
+                    'userId': userId,
+                    'buyerNick': secretPin,
+                    'activityId': addCartActInfo["activityId"],
+                    'activityType': str(activityType)
+                }
+                followShop = session.post("https://lzkj-isv.isvjd.com/wxActionCommon/followShop", headers=headers, data=data, params=params)
+                print(f'开始关注店铺 {followShop.text}')
+                time.sleep(random.randint(2, 3))
             for cpvosInfo in cpvosList:
                 hasAddCartSize = 0
                 if cpvosInfo["collection"] == False:
