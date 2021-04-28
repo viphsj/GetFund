@@ -1,4 +1,4 @@
-name: 小活动-抽奖
+name: 小活动-抽奖2
 
 on:
   workflow_dispatch:
