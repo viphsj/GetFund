@@ -97,7 +97,7 @@ for cookies in jdCookie.get_cookies():
         if response.text == '':
             errMsg = " 活动已结束2"
             skipAdd = True
-        elif response.json()["result"] == False:
+        elif response.text.find('"result":false,') > -1:
             errMsg = response.json()["errorMessage"]
             skipAdd = True
         if skipAdd == True:
@@ -157,10 +157,12 @@ for cookies in jdCookie.get_cookies():
             'activityId': collectionActInfo["activityId"]
         }
         getPrize = session.post("https://lzkj-isv.isvjd.com/wxCollectionActivity/getPrize", headers=headers, data=data, params=params)
-        if getPrize.json()["result"] == True:
+        if getPrize.text.find('"result":true,') > -1:
             print(f'获得：{getPrize.json()["data"]["name"]}\n')
+        elif getPrize.text.find('"result":false,') > -1:
+            print(f'错误：{getPrize.json()["errorMessage"]}\n')
         else:
-            print(f'错误：{getPrize.json()["errorMessage"]}\n')        
+            print(f'错误：{getPrize.text]}\n')
         time.sleep(random.randint(3, 6))
     print("\n")
     print("##"*30)
