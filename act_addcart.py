@@ -150,7 +150,10 @@ for cookies in jdCookie.get_cookies():
             'activityId': addCartActInfo["activityId"]
         }
         getPrize = session.post("https://lzkj-isv.isvjd.com/wxCollectionActivity/getPrize", headers=headers, data=data, params=params)
-        print(f'获得：{getPrize.json()["data"]["name"]}\n')
+        if getPrize.json()["result"] != False:
+            print(f'获得：{getPrize.json()["data"]["name"]}\n')
+        else:
+            print(f'获得：{getPrize.json()["errorMessage"]}\n')
         time.sleep(random.randint(3, 6))
     print("\n")
     print("##"*30)
