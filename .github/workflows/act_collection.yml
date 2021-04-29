@@ -3,7 +3,7 @@ name: 小活动-关注商品
 on:
   workflow_dispatch:
   schedule:
-    - cron: "50 */4 * * *"
+    - cron: "50 */1 * * *"
 
 jobs:
   build:
