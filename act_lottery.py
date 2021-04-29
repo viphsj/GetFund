@@ -94,20 +94,24 @@ for cookies in jdCookie.get_cookies():
             print(lotteryActInfo["shopName"], errMsg)
             time.sleep(random.randint(2, 3))
             continue
-        if response.json()["result"] == True and response.json()["data"]["canDrawTimes"] > 0:
-            canDrawTimes = response.json()["data"]["canDrawTimes"]
-            for i in range(canDrawTimes):
-                getGift = session.post("https://lzkj-isv.isvjd.com/wxDrawActivity/start", headers=headers, data=data, params=params)
-                if getGift.text.find('"drawOk":true,"') > -1:
-                    errMsg = " 获得 " + getGift.json()["data"]["name"]
-                elif getGift.text.find('errorMessage') > -1:
-                    errMsg = getGift.json()["errorMessage"]
-                else:
-                    errMsg = getGift.text
-                print(lotteryActInfo["shopName"], errMsg, "\n")
-                time.sleep(random.randint(3, 6))
+        if response.text.find('"result":true,"') > -1:
+            if response.json()["data"]["canDrawTimes"] > 0:
+                canDrawTimes = response.json()["data"]["canDrawTimes"]
+                for i in range(canDrawTimes):
+                    getGift = session.post("https://lzkj-isv.isvjd.com/wxDrawActivity/start", headers=headers, data=data, params=params)
+                    if getGift.text.find('"drawOk":true,"') > -1:
+                        errMsg = " 获得 " + getGift.json()["data"]["name"]
+                    elif getGift.text.find('errorMessage') > -1:
+                        errMsg = getGift.json()["errorMessage"]
+                    else:
+                        errMsg = getGift.text
+                    print(lotteryActInfo["shopName"], errMsg, "\n")
+                    time.sleep(random.randint(3, 6))
+            else:
+                print(lotteryActInfo["shopName"], " 无抽奖次数！\n")
+                time.sleep(random.randint(2, 5))
         else:
-            print(lotteryActInfo["shopName"], " 无抽奖次数！")
+            print(lotteryActInfo["shopName"], " 无效活动！\n")
             time.sleep(random.randint(2, 5))
     print("\n")
     print("##"*30)
