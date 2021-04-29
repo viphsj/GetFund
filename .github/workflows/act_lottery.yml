@@ -3,7 +3,7 @@ name: 小活动-抽奖2
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 */4 * * *"
+    - cron: "30 */1 * * *"
 
 jobs:
   build:
