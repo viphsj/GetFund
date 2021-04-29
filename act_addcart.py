@@ -66,7 +66,7 @@ for cookies in jdCookie.get_cookies():
     }
     getTopAndNewActInfo = session.post(url, headers=headers, data=data, params=params)
     TopAndNewAct = getTopAndNewActInfo.json()["data"]["homeInfoResultVOList"]
-    
+    """
     data = {
         'pin': secretPin,
         'aggrateActType': 7,
@@ -77,7 +77,7 @@ for cookies in jdCookie.get_cookies():
     getTopAndNewActInfo = session.post(url, headers=headers, data=data, params=params)
     for newAct in getTopAndNewActInfo.json()["data"]["homeInfoResultVOList"]:
         TopAndNewAct.append(newAct)
-
+    """
     print("##"*30)
     print("【开始加购】\n")
     for addCartActInfo in TopAndNewAct:
