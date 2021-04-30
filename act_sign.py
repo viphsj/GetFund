@@ -67,16 +67,17 @@ for cookies in jdCookie.get_cookies():
     getTopAndNewActInfo = session.post(url, headers=headers, data=data, params=params)
     TopAndNewAct = getTopAndNewActInfo.json()["data"]["homeInfoResultVOList"]
     
-    data = {
-        'pin': secretPin,
-        'aggrateActType': 5,
-        'topNewType': 1,
-        'pageNo': 1,
-        'pageSize': 100
-    }
-    getTopAndNewActInfo = session.post(url, headers=headers, data=data, params=params)
-    for newAct in getTopAndNewActInfo.json()["data"]["homeInfoResultVOList"]:
-        TopAndNewAct.append(newAct)
+    if int(jdCookie.get_time_now().strftime("%H%M%S")) < 60000:
+        data = {
+            'pin': secretPin,
+            'aggrateActType': 5,
+            'topNewType': 1,
+            'pageNo': 1,
+            'pageSize': 100
+        }
+        getTopAndNewActInfo = session.post(url, headers=headers, data=data, params=params)
+        for newAct in getTopAndNewActInfo.json()["data"]["homeInfoResultVOList"]:
+            TopAndNewAct.append(newAct)
 
     print("##"*30)
     print("【开始签到】\n")
