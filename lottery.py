@@ -27,7 +27,7 @@ def requestsPost(cookies, functionId, body):
        'clientVersion': '1.0.0'
     }      
     response = requests.post("https://api.m.jd.com/client.action",headers=headers, params=params, cookies=cookies, data=data)
-    return response.json()
+    return response
 
 def toDo(cookies, apiId, taskToken, waitDuration):
     collectScore = requestsPost(cookies, "harmony_collectScore", r'{"appId":"' + apiId + '","taskToken":"' + taskToken + '","taskId":' + taskId + ',"actionType":1}')    
@@ -35,7 +35,7 @@ def toDo(cookies, apiId, taskToken, waitDuration):
     time.sleep(waitDuration)
     collectScore = requestsPost(cookies, "harmony_collectScore", r'{"appId":"' + apiId + '","taskToken":"' + taskToken + '","taskId":' + taskId + ',"actionType":0}')
     # print(collectScore, "\n")
-    return collectScore["data"]["bizMsg"]
+    return collectScore.json()["data"]["bizMsg"]
 
 for cookies in jdCookie.get_cookies():
     #获取任务列表
@@ -44,9 +44,9 @@ for cookies in jdCookie.get_cookies():
     for apiId in appIdList:
         # print(apiId)
         getTaskDetail = requestsPost(cookies, 'healthyDay_getHomeData', r'{"appId":"'+apiId+'","taskToken":"","channelId":1}')
-        if getTaskDetail["data"]["bizMsg"] == "success":
+        if getTaskDetail.text.find('"bizMsg":"success"') > -1:
             print("【开始做任务】")
-            for taskVos in getTaskDetail["data"]["result"]["taskVos"]:
+            for taskVos in getTaskDetail.json()["data"]["result"]["taskVos"]:
                 for taskType in [0, 1, 2, 3, 7, 8, 9, 26, 14, 15]:
                     if taskVos["taskType"] == taskType and taskVos["status"] == 1:
                         taskId = str(taskVos["taskId"])
@@ -86,7 +86,7 @@ for cookies in jdCookie.get_cookies():
                                     if i == doNum:
                                         break
                                     collectScore = requestsPost(cookies, "harmony_collectScore", r'{"appId":"'+apiId+'","taskToken":"' + taskInfo["taskToken"] + '","taskId":' + taskId + ',"actionType":0}')                                
-                                    resultMsg = collectScore["data"]["bizMsg"]
+                                    resultMsg = collectScore.json()["data"]["bizMsg"]
                                     print(taskName, str(i+1), "/", str(doNum), " ", resultMsg, "\n")
                                     time.sleep(waitDuration)
                                     i = i + 1
@@ -101,26 +101,30 @@ for cookies in jdCookie.get_cookies():
                         elif taskType == 14:
                             for cookiesSupport in jdCookie.get_cookies_all():
                                 collectScore = requestsPost(cookiesSupport, "harmony_collectScore", r'{"appId":"'+apiId+'","taskToken":"' + taskVos["assistTaskDetailVo"]["taskToken"]  + '","taskId":' + taskId + ',"actionType":0}')                            
-                                print(f"{taskName} {collectScore['data']['bizMsg']}\n")
+                                print(f"{taskName} {collectScore.json()['data']['bizMsg']}\n")
                                 time.sleep(waitDuration)
-                                if collectScore["data"]["bizMsg"] == "助力已满员！谢谢你哦~":
+                                if collectScore.json()["data"]["bizMsg"] == "助力已满员！谢谢你哦~":
                                     break
             getHomeData = requestsPost(cookies, 'healthyDay_getHomeData', r'{"appId":"'+apiId+'","taskToken":"","channelId":1}')
-            userScore = int(getHomeData["data"]["result"]["userInfo"]["userScore"])
-            scorePerLottery = int(getHomeData["data"]["result"]["userInfo"]["scorePerLottery"])
+            if getHomeData.text.find("lotteryNum") > -1:
+                userScore = int(getHomeData.json()['data']['result']['userInfo']['lotteryNum'])
+            else:
+                userScore = int(getHomeData.json()["data"]["result"]["userInfo"]["userScore"])
+            scorePerLottery = int(getHomeData.json()["data"]["result"]["userInfo"]["scorePerLottery"])
             lotteryNum = userScore//scorePerLottery
             if lotteryNum > 0:
                 print("【开始抽奖】")
                 for i in range(lotteryNum):                    
                     getLotteryResult = requestsPost(cookies, 'interact_template_getLotteryResult', r'{"appId":"'+apiId+'"}')
-                    jsonStr = json.dumps(getLotteryResult,ensure_ascii=False)
-                    pattern = re.compile(r'(?<="prizeName": ").+?(?=",)')
-                    giftName = pattern.search(jsonStr)
+                    if getLotteryResult.json()["data"]["bizCode"] == 112:
+                        break
+                    pattern = re.compile(r'(?<="prizeName":").+?(?=",)')
+                    giftName = pattern.search(getLotteryResult.text)
                     if giftName != None:
-                        print(giftName)
+                        print(giftName.group())
                     time.sleep(1)
         else:
-            print(getTaskDetail)
+            print(getTaskDetail.text)
     time.sleep(random.randint(1, 2))
     print("\n")
     print("##"*30)
