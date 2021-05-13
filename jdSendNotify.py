@@ -40,6 +40,7 @@ def sendNotify(text, desp):
 def tgBotNotify(titleText, desp):
     if TG_BOT_TOKEN != "" and TG_USER_ID != "":
         body = f"chat_id={TG_USER_ID}&text={titleText}\n\n{desp}&disable_web_page_preview=true"
+        body.encode('utf-8')
         urlApi = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
         doPost = requestsPost(urlApi, body)
         print(doPost)
