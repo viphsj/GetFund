@@ -40,9 +40,8 @@ def sendNotify(text, desp):
 def tgBotNotify(titleText, desp):
     if TG_BOT_TOKEN != "" and TG_USER_ID != "":
         body = f"chat_id={TG_USER_ID}&text={titleText}\n\n{desp}&disable_web_page_preview=true"
-        body.encode('utf-8')
         urlApi = f"https://api.telegram.org/bot{TG_BOT_TOKEN}/sendMessage"
-        doPost = requestsPost(urlApi, body)
+        doPost = requestsPost(urlApi, body.encode('utf-8'))
         print(doPost)
     else:
         print("未提供 telegram 机器人推送所需的 TG_BOT_TOKEN 和 TG_USER_ID，取消 telegram 推送消息通知\n")
