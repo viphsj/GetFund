@@ -5,6 +5,7 @@ import time
 import random
 import re
 import os,sys
+import jdSendNotify
 
 headers = {
     'Host': 'lzkj-isv.isvjd.com',
