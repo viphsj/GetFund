@@ -5,6 +5,7 @@ import time
 import random
 import re
 import os,sys
+import jdSendNotify
 
 headers = {
     'Host': 'lzkj-isv.isvjd.com',
@@ -32,6 +33,7 @@ for cookies in jdCookie.get_cookies():
     print("##"*30)
     print("【开始获取活动信息】\n")
     today = jdCookie.get_time_now().strftime("%Y%m%d")
+    giftMsg = ""
     errMsg = ""
     url = os.environ["JD_SIGN_GETTOKEN_URL"]
     params = {
@@ -140,5 +142,8 @@ for cookies in jdCookie.get_cookies():
                 print(activityInfo["shopName"], " ", response.json()["msg"])
             else:
                 print(activityInfo["shopName"], " ", giftName.group())
+                giftMsg = activityInfo["shopName"] + " 获得：" + giftName.group() + "\n"
+    if giftMsg != "":
+        jdSendNotify.sendNotify("小活动-签到\n" + cookies["pt_pin"] + "\n", giftMsg)
     print("\n")
     print("##"*30)
