@@ -27,3 +27,5 @@ jobs:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
         JD_SIGN_7D_URL: ${{ secrets.JD_SIGN_7D_URL }}
         JD_SIGN_7D_C1: ${{ secrets.JD_SIGN_7D_C1 }}
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_USER_ID: ${{ secrets.TG_USER_ID }}
