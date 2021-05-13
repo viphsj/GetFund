@@ -32,6 +32,7 @@ for cookies in jdCookie.get_cookies():
     print("##"*30)
     print("【开始获取活动信息】\n")
     today = jdCookie.get_time_now().strftime("%Y%m%d")
+    giftMsg = ""
     errMsg = ""
     url = os.environ["JD_SIGN_GETTOKEN_URL"]
     params = {
@@ -101,6 +102,7 @@ for cookies in jdCookie.get_cookies():
                     getGift = session.post("https://lzkj-isv.isvjd.com/wxDrawActivity/start", headers=headers, data=data, params=params)
                     if getGift.text.find('"drawOk":true,"') > -1:
                         errMsg = " 获得 " + getGift.json()["data"]["name"]
+                        giftMsg = lotteryActInfo["shopName"] + " " + errMsg + "\n"
                     elif getGift.text.find('errorMessage') > -1:
                         errMsg = getGift.json()["errorMessage"]
                     else:
@@ -113,5 +115,7 @@ for cookies in jdCookie.get_cookies():
         else:
             print(lotteryActInfo["shopName"], " 无效活动！\n")
             time.sleep(random.randint(2, 5))
+    if giftMsg != "":
+        jdSendNotify.sendNotify("小活动-抽奖2\n" + cookies["pt_pin"] + "\n", giftMsg)
     print("\n")
     print("##"*30)
