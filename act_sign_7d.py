@@ -4,6 +4,7 @@ import requests
 import time
 import random
 import GetSignToken
+import jdSendNotify
 
 headers = {
     'Host': 'api.m.jd.com',
@@ -28,6 +29,7 @@ def requestsGet(cookies, functionId, body):
 signTokenList = GetSignToken.main()
 
 for cookies in jdCookie.get_cookies():
+    giftMsg = ""
     invalidToken = []
     validToken = []
     for signToken in signTokenList:
@@ -62,11 +64,14 @@ for cookies in jdCookie.get_cookies():
                 break
             elif doSign.text.find("prizeList") > -1 and doSign.text.find('"type":4') > -1:
                 giftName = str(int(doSign.json()["data"][0]["prizeList"][0]["discount"])) + "京豆"
+                giftMsg = activityName + " 获得：" + giftName + "\n"
             validToken.append(signToken)
             print(f"{activityName} {giftName}\n")
             time.sleep(random.randint(1, 3))
         elif getActivityInfo.text.find('"code":402') > -1:
             invalidToken.append(signToken)
         time.sleep(random.randint(3, 6))
+    if giftMsg != "":
+        jdSendNotify.sendNotify("小活动-签到7D\n" + cookies["pt_pin"] + "\n", giftMsg)
     print("\n")
     print("##"*30)
