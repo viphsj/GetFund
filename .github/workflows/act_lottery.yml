@@ -28,3 +28,5 @@ jobs:
         JD_SIGN_GETTOKEN_URL: ${{ secrets.JD_SIGN_GETTOKEN_URL }}
         JD_SIGN_GETTOKEN_BODY: ${{ secrets.JD_SIGN_GETTOKEN_BODY }}
         JD_SIGN_URL: ${{ secrets.JD_SIGN_URL }}
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_USER_ID: ${{ secrets.TG_USER_ID }}
