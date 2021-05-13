@@ -5,6 +5,7 @@ import time
 import random
 import re
 import os,sys
+import jdSendNotify
 
 headers = {
     'Host': 'lzkj-isv.isvjd.com',
@@ -32,6 +33,7 @@ for cookies in jdCookie.get_cookies():
     print("##"*30)
     print("【开始获取活动信息】\n")
     today = jdCookie.get_time_now().strftime("%Y%m%d")
+    giftMsg = ""
     errMsg = ""
     url = os.environ["JD_SIGN_GETTOKEN_URL"]
     params = {
@@ -159,10 +161,13 @@ for cookies in jdCookie.get_cookies():
         getPrize = session.post("https://lzkj-isv.isvjd.com/wxCollectionActivity/getPrize", headers=headers, data=data, params=params)
         if getPrize.text.find('"result":true,') > -1:
             print(f'获得：{getPrize.json()["data"]["name"]}\n')
+            giftMsg = collectionActInfo["shopName"] + " 获得：" + getPrize.json()["data"]["name"] + "\n"
         elif getPrize.text.find('"result":false,') > -1:
             print(f'错误：{getPrize.json()["errorMessage"]}\n')
         else:
             print(f'错误：{getPrize.text}\n')
         time.sleep(random.randint(3, 6))
+    if giftMsg != "":
+        jdSendNotify.sendNotify("小活动-关注商品\n" + cookies["pt_pin"] + "\n", giftMsg)
     print("\n")
     print("##"*30)
