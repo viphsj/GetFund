@@ -141,7 +141,7 @@ def steal(cookies, roundId):
         for i in stealList:
 
             if int(i["nutrCount"]) == 3:  # 为3时才会偷取
-                print(i)
+                # print(i)
                 print(functionTemplate(cookies, "collectUserNutr", {
                     "paradiseUuid": i["paradiseUuid"], "roundId": roundId}))
                 time.sleep(2)
