@@ -137,7 +137,7 @@ for cookies in jdCookie.get_cookies():
         time.sleep(random.randint(3, 6))
         if response.status_code == 200:
             pattern = re.compile(r'(?<="giftName":").+?(?=",")')                
-            giftName = pattern.search(response.text)
+            giftName += pattern.search(response.text)
             if giftName == None:
                 print(activityInfo["shopName"], " ", response.json()["msg"])
             else:
