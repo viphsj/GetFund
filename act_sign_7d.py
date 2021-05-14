@@ -64,7 +64,7 @@ for cookies in jdCookie.get_cookies():
                 break
             elif doSign.text.find("prizeList") > -1 and doSign.text.find('"type":4') > -1:
                 giftName = str(int(doSign.json()["data"][0]["prizeList"][0]["discount"])) + "京豆"
-                giftMsg = activityName + " 获得：" + giftName + "\n"
+                giftMsg += activityName + " 获得：" + giftName + "\n"
             validToken.append(signToken)
             print(f"{activityName} {giftName}\n")
             time.sleep(random.randint(1, 3))
