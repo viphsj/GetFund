@@ -103,7 +103,7 @@ for cookies in jdCookie.get_cookies():
                     getGift = session.post("https://lzkj-isv.isvjd.com/wxDrawActivity/start", headers=headers, data=data, params=params)
                     if getGift.text.find('"drawOk":true,"') > -1:
                         errMsg = " 获得：" + str(getGift.json()["data"]["name"])
-                        giftMsg = lotteryActInfo["shopName"] + " " + errMsg + "\n"
+                        giftMsg += lotteryActInfo["shopName"] + " " + errMsg + "\n"
                     elif getGift.text.find('errorMessage') > -1:
                         errMsg = getGift.json()["errorMessage"]
                     else:
