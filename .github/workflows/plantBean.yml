@@ -25,5 +25,6 @@ jobs:
         python plantBean.py
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
+        JD_PLANT_SHARECODE: ${{ secrets.JD_PLANT_SHARECODE }}
         # TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
         # TG_USER_ID: ${{ secrets.TG_USER_ID }}
