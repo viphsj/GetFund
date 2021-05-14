@@ -3,7 +3,11 @@ import time
 import json
 import jdCookie
 
-plantUuid = [""]  # 填写别人的助力码
+plantUuid = []  # 填写别人的助力码
+if "JD_PLANT_SHARECODE" in os.environ:
+    plantSharecode = os.environ["JD_PLANT_SHARECODE"]
+    for shareCode in plantSharecode.split("@"):
+        plantUuid.append(shareCode)
 
 def functionTemplate(cookies, functionId, body):
     headers = {
@@ -139,7 +143,6 @@ def steal(cookies, roundId):
                      ["friendInfoList"] if "nutrCount" in i]
 
         for i in stealList:
-
             if int(i["nutrCount"]) == 3:  # 为3时才会偷取
                 # print(i)
                 print(functionTemplate(cookies, "collectUserNutr", {
@@ -151,7 +154,7 @@ def getReward(cookies, status):
     if status == "5":
         data = functionTemplate(
             cookies, "receivedBean", {"roundId": lastRoundId})["data"]
-        print(f"""{data["growth"]}成长值兑换{data["awardBean"]}京豆""")
+        print(f'{data["growth"]}成长值兑换{data["awardBean"]}京豆')
     if status == "6":
         print("您已领奖，去京豆明细页看看")
 
@@ -182,7 +185,7 @@ def waterWheel(cookies):
         print(result["errorMessage"])
         return
 
-for cookies in jdCookie.get_cookies():
+for cookies in jdCookie.get_cookies_all():
     plantBeanIndex = functionTemplate(cookies, "plantBeanIndex", {})
     # print(f"""【{plantBeanIndex["data"]["plantUserInfo"]["plantNickName"]}】\n""")
     # print(f"""我的助力码: {plantBeanIndex["data"]["jwordShareInfo"]["shareUrl"].split("=")[-1]}\n""")
@@ -194,9 +197,7 @@ for cookies in jdCookie.get_cookies():
     takeTask(cookies, taskList)  # 执行每日任务
     print("     任务   进度")
     for i in functionTemplate(cookies, "plantBeanIndex", {})["data"]["taskList"]:
-        print(
-            f"""[{i["taskName"]}]  {i["gainedNum"]}/{i["totalNum"]}   {i["isFinished"]} """)
-
+        print(f'[{i["taskName"]}]  {i["gainedNum"]}/{i["totalNum"]}   {i["isFinished"]} ')
     egg(cookies)
     waterWheel(cookies)
     steal(cookies, currentRoundId)
