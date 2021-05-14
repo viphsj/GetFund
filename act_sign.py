@@ -137,12 +137,12 @@ for cookies in jdCookie.get_cookies():
         time.sleep(random.randint(3, 6))
         if response.status_code == 200:
             pattern = re.compile(r'(?<="giftName":").+?(?=",")')                
-            giftName += pattern.search(response.text)
+            giftName = pattern.search(response.text)
             if giftName == None:
                 print(activityInfo["shopName"], " ", response.json()["msg"])
             else:
                 print(activityInfo["shopName"], " ", giftName.group())
-                giftMsg = activityInfo["shopName"] + " 获得：" + giftName.group() + "\n"
+                giftMsg += activityInfo["shopName"] + " 获得：" + giftName.group() + "\n"
     if giftMsg != "":
         jdSendNotify.sendNotify("小活动-签到\n" + cookies["pt_pin"] + "\n", giftMsg)
     print("\n")
