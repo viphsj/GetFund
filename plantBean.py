@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import os
 import jdCookie
 
 plantUuid = []  # 填写别人的助力码
