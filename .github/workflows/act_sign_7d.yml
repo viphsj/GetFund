@@ -3,7 +3,7 @@ name: 小活动-签到7D
 on:
   workflow_dispatch:
   schedule:
-    - cron: "20 */4 * * *"
+    - cron: "20 4,15,16 * * *"
 
 jobs:
   build:
