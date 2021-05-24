@@ -108,7 +108,7 @@ for cookies in jdCookie.get_cookies():
                         errMsg = getGift.json()["errorMessage"]
                     else:
                         errMsg = getGift.text
-                    print(lotteryActInfo["shopName"], errMsg, "\n")
+                    # print(lotteryActInfo["shopName"], errMsg, "\n")
                     time.sleep(random.randint(3, 6))
             else:
                 print(lotteryActInfo["shopName"], " 无抽奖次数！\n")
