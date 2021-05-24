@@ -141,7 +141,7 @@ for cookies in jdCookie.get_cookies():
             if giftName == None:
                 print(activityInfo["shopName"], " ", response.json()["msg"])
             else:
-                print(activityInfo["shopName"], " ", giftName.group())
+                # print(activityInfo["shopName"], " ", giftName.group())
                 giftMsg += activityInfo["shopName"] + " 获得：" + giftName.group() + "\n"
     if giftMsg != "":
         jdSendNotify.sendNotify("小活动-签到\n" + cookies["pt_pin"] + "\n", giftMsg)
