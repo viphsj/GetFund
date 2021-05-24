@@ -156,7 +156,7 @@ for cookies in jdCookie.get_cookies():
         }
         getPrize = session.post("https://lzkj-isv.isvjd.com/wxCollectionActivity/getPrize", headers=headers, data=data, params=params)        
         if getPrize.text.find('"result":true,') > -1:
-            print(f'获得：{getPrize.json()["data"]["name"]}\n')
+            # print(f'获得：{getPrize.json()["data"]["name"]}\n')
             giftMsg += addCartActInfo["shopName"] + " 获得：" + str(getPrize.json()["data"]["name"]) + "\n"
         elif getPrize.text.find('"result":false,') > -1:
             print(f'错误：{getPrize.json()["errorMessage"]}\n')
