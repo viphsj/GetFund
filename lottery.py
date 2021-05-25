@@ -120,7 +120,7 @@ for cookies in jdCookie.get_cookies():
                         break
                     pattern = re.compile(r'(?<="prizeName":").+?(?=",)')
                     giftName = pattern.search(getLotteryResult.text)
-                    if giftName != None:
+                    # if giftName != None:
                         # print(giftName.group())
                     time.sleep(1)
         else:
