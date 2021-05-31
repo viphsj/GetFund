@@ -45,9 +45,14 @@ for cookies in jdCookie.get_cookies():
         # print(apiId)
         getTaskDetail = requestsPost(cookies, 'healthyDay_getHomeData', r'{"appId":"'+apiId+'","taskToken":"","channelId":1}')
         if getTaskDetail.text.find('"bizMsg":"success"') > -1:
+            if getTaskDetail.text.find('endTime') > -1:
+                endTime = getTaskDetail.json()["data"]["result"]["activityInfo"]["endTime"]
+                nowTime = jdCookie.get_time_unix()
+                if endTime < nowTime:
+                    break
             print("【开始做任务】")
             for taskVos in getTaskDetail.json()["data"]["result"]["taskVos"]:
-                for taskType in [0, 1, 2, 3, 7, 8, 9, 26, 14, 15]:
+                for taskType in [0, 1, 2, 3, 7, 8, 9, 26, 13, 14, 15]:
                     if taskVos["taskType"] == taskType and taskVos["status"] == 1:
                         taskId = str(taskVos["taskId"])
                         taskTimes = taskVos["times"]
@@ -67,7 +72,7 @@ for cookies in jdCookie.get_cookies():
                                     resultMsg = toDo(cookies, apiId, taskInfo["taskToken"], waitDuration)
                                     print(taskName, str(i+1), "/", str(doNum), " ", resultMsg)
                                     i = i + 1                            
-                        elif taskType == 0:
+                        elif taskType in [0, 13]:
                             if i == doNum:
                                 break
                             collectScore = requestsPost(cookies, "harmony_collectScore", r'{"appId":"'+apiId+'","taskToken":"' + taskVos["simpleRecordInfoVo"]["taskToken"]  + '"}')
