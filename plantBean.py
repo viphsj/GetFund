@@ -169,8 +169,7 @@ def water(cookies):
 
 def egg(cookies):
     print("\n[天天扭蛋]")
-    restLotteryNum = functionTemplate(cookies, "plantEggLotteryIndex", {})[
-        "data"]["restLotteryNum"]
+    restLotteryNum = functionTemplate(cookies, "plantEggLotteryIndex", {})["data"]["restLotteryNum"]
     if restLotteryNum == 0:
         print(">>>暂无扭蛋")
     for i in range(restLotteryNum):
@@ -199,7 +198,7 @@ for cookies in jdCookie.get_cookies_all():
     print("     任务   进度")
     for i in functionTemplate(cookies, "plantBeanIndex", {})["data"]["taskList"]:
         print(f'[{i["taskName"]}]  {i["gainedNum"]}/{i["totalNum"]}   {i["isFinished"]} ')
-    egg(cookies)
+    # egg(cookies)
     waterWheel(cookies)
     steal(cookies, currentRoundId)
     water(cookies)
